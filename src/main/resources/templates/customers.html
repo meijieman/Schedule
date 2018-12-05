@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Customers Page</title>
+</head>
+<body>
+
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>密码</th>
+            <th>用户昵称</th>
+        </tr>
+        <tr th:each="customer:${customers}">
+            <td th:text="${customer.name}"></td>
+            <td th:text="${customer.remark}"></td>
+        </tr>
+        </thead>
+    </table>
+</div>
+<hr/>
+
+<h2>修改表</h2>
+<div>
+    <form th:action="@{/modify}" th:object="${customers}" method="post">
+        <div class="customer" th:each="customer:${customers}">
+            <input type="text" th:value="${customer.name}"/>
+            <input type="text" th:value="${customer.remark}"/>
+        </div>
+
+        <input type="submit" value="提交"/>
+    </form>
+</div>
+
+</body>
+</html>

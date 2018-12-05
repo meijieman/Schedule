@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Page</title>
+</head>
+<body>
+
+<h2>展示数据</h2>
+<p th:text="${data}"></p>
+
+
+<form th:action="@{/list}" method="post" th:object="${customer_resp}">
+    <div th:each="customer,rowStat:${customer_resp.data}">
+        <input type="text" th:field="*{data[__${rowStat.index}__].name}"/>
+        <input type="text" th:field="*{data[__${rowStat.index}__].remark}"/>
+    </div>
+
+    <input type="submit" value="提交"/>
+
+</form>
+
+
+
+
+</body>
+</html>
