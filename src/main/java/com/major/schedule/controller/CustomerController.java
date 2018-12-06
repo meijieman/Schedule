@@ -1,5 +1,7 @@
 package com.major.schedule.controller;
 
+import com.major.schedule.entity.City;
+import com.major.schedule.entity.CityResp;
 import com.major.schedule.entity.Customer;
 import com.major.schedule.entity.CustomerResp;
 import org.slf4j.Logger;
@@ -38,6 +40,11 @@ public class CustomerController {
 
         model.addAttribute("customers", list);
 
+        Customer customer = new Customer();
+        customer.setRemark("github");
+        customer.setName("meijieman");
+        model.addAttribute("my_github", customer);
+        model.addAttribute("page_title", "网页标题");
         return "customers";
     }
 
@@ -72,9 +79,34 @@ public class CustomerController {
 
 
     @PostMapping("/list")
-    public void list(@ModelAttribute(value = "data") CustomerResp resp) {
+    public void list(@ModelAttribute(value = "customer_resp") CustomerResp resp) {
         log.info("list " + resp);
 
     }
+
+    @GetMapping("/select")
+    public String selectCity(Model model){
+
+        CityResp resp = new CityResp();
+        List<City> list = new ArrayList<>();
+        City wuhan = new City();
+        wuhan.setCode(100);
+        wuhan.setName("武汉");
+        list.add(wuhan);
+        City xinyang = new City();
+        xinyang.setCode(101);
+        xinyang.setName("信阳");
+        list.add(xinyang);
+        City shenzhen = new City();
+        shenzhen.setCode(102);
+        shenzhen.setName("深圳");
+        list.add(shenzhen);
+        resp.setCityList(list);
+        model.addAttribute("cityResp", resp);
+
+        model.addAttribute("selectedCode", -1);
+        return "city";
+    }
+
 
 }

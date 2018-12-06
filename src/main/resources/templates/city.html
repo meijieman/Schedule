@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h2>下拉框</h2>
+<select id="select_city">
+    <option value="-1">请选择</option>
+    <option th:selected="${city.code eq selectedCode}" th:each="city:${cityResp.cityList}"
+            th:value="${city.code}" th:text="${city.name}"></option>
+</select>
+
+<input type="button" value="确定" onclick="click_city()"/>
+
+<script type="text/javascript">
+    function click_city() {
+        console.log("点击事件")
+        var element = document.getElementById("select_city");
+        var index = element.selectedIndex;
+        var value = element.options[index].value;
+        alert("选中值为 " + value);
+    }
+</script>
+
+</body>
+</html>

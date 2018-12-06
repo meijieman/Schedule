@@ -2,10 +2,19 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Customers Page</title>
+    <title th:text="${page_title}">这个标题就无效了</title>
 </head>
 <body>
+<h2>1、通过直接访问对象的方式</h2>
+<p th:text="${my_github.name}"></p>
+<p th:text="${my_github.remark}"></p>
+<h2>2、通过th:object访问对象的方式</h2>
+<div th:object="${my_github}">
+    <p th:text="*{name}"></p>
+    <p th:text="*{remark}"></p>
+</div>
 
+<hr/>
 <div>
     <table>
         <thead>
@@ -22,17 +31,29 @@
 </div>
 <hr/>
 
-<h2>修改表</h2>
+<h2>th:value 示例</h2>
+<div class="customer" th:each="customer:${customers}">
+    <input type="text" th:value="${customer.name}"/>
+    <input type="text" th:value="${customer.remark}"/>
+</div>
+
+
+<h2>表单提交</h2>
 <div>
     <form th:action="@{/modify}" th:object="${customers}" method="post">
-        <div class="customer" th:each="customer:${customers}">
-            <input type="text" th:value="${customer.name}"/>
-            <input type="text" th:value="${customer.remark}"/>
+        <div class="customer" th:each="cust,rowStat:${customers}">
+            <p th:text="${rowStat.current}"></p>
+            <!--<input type="text" th:field="*{customers[__${rowStat.index}__].name}"/>-->
+            <!--<input type="text" th:field="*{customers[__${rowStat.index}__].remark}"/>-->
         </div>
 
         <input type="submit" value="提交"/>
     </form>
 </div>
+
+<hr/>
+
+
 
 </body>
 </html>
